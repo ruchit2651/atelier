@@ -2762,3 +2762,59 @@ html[data-theme="dark"] {
     font-size: 24px;
   }
 }
+
+/* Admin dashboard responsive layout */
+.admin-shell{grid-template-columns:minmax(220px,260px) minmax(0,1fr);min-width:0}
+.admin-side{min-width:0;align-self:start}
+.admin-main{min-width:0;overflow-wrap:anywhere}
+.admin-stats{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.admin-editor{width:min(100%,760px);min-width:0}
+.admin-editor label{display:block;margin:0 0 16px}
+.admin-editor input,.admin-editor textarea,.admin-editor select{width:100%;max-width:100%;min-width:0}
+.admin-list,.message-list{min-width:0}
+.message-head{align-items:flex-start;flex-wrap:wrap}
+.inquiry-contact,.inquiry-details dd,.inquiry-message{overflow-wrap:anywhere;word-break:break-word}
+.message-list article button{min-height:40px;padding:8px 10px;cursor:pointer}
+
+@media(max-width:900px){
+  .admin-shell{grid-template-columns:minmax(0,1fr)}
+  .admin-side{position:sticky;z-index:20;top:0;height:auto;max-height:none;padding:10px 16px;flex-direction:row;align-items:center;gap:6px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;background:var(--surface);border-right:0;border-bottom:1px solid var(--line);box-shadow:0 5px 18px #0000000a}
+  .admin-side .wordmark{display:flex;flex:0 0 auto;align-items:center;gap:8px;padding:4px 12px 4px 2px;margin-right:4px;border-right:1px solid var(--line)}
+  .admin-side .wordmark>span:last-child{font-size:.68rem;letter-spacing:.08em}
+  .admin-side>.eyebrow{display:none}
+  .admin-side>button{flex:0 0 auto;width:auto;min-height:42px;padding:10px 12px;font-size:.76rem;white-space:nowrap}
+  .admin-side .admin-logout{margin:0 0 0 auto;padding-inline:12px;border:0}
+  .admin-main{padding:28px clamp(18px,4vw,40px) 64px}
+}
+@media(max-width:560px){
+  .admin-side{padding:8px 10px;gap:4px}
+  .admin-side .wordmark{gap:6px;padding-right:9px;margin-right:2px}
+  .admin-side .wordmark .mark{width:30px;height:32px;flex-basis:30px}
+  .admin-side .wordmark>span:last-child{font-size:.61rem;letter-spacing:.04em}
+  .admin-side>button{min-height:40px;padding:9px;font-size:.7rem;gap:6px}
+  .admin-side>button svg{width:15px;height:15px;flex:0 0 auto}
+  .admin-main{padding:22px 14px 48px}
+  .admin-top{align-items:flex-start;gap:12px;padding-bottom:18px}
+  .admin-top h1{font-size:clamp(1.8rem,9vw,2.4rem);overflow-wrap:anywhere}
+  .admin-top>span{max-width:48%;text-align:right;overflow-wrap:anywhere;padding-top:4px}
+  .admin-stats{grid-template-columns:1fr;gap:10px;margin:20px 0}
+  .admin-stats>div{min-height:0;padding:16px;gap:7px}
+  .admin-stats strong{font-size:1.8rem}
+  .admin-welcome{margin-top:18px;padding:22px 18px}
+  .admin-welcome h2{font-size:1.55rem}
+  .admin-toolbar{padding:14px 0}
+  .admin-editor{padding:20px 16px}
+  .admin-editor h2{font-size:1.45rem}
+  .admin-list>div{align-items:flex-start;gap:10px;padding:12px 0}
+  .admin-list>div>img{width:64px;height:52px;flex:0 0 64px}
+  .admin-list strong{overflow-wrap:anywhere}
+  .message-list article{padding:15px}
+  .message-head{flex-direction:column;gap:4px}
+  .inquiry-details>div{grid-template-columns:82px minmax(0,1fr);gap:8px}
+  .message-list article>div:last-child{justify-content:flex-start;flex-wrap:wrap}
+  .admin-login{padding:100px 14px 40px}
+  .admin-login form{padding:26px 20px}
+  .admin-login h1{font-size:clamp(2rem,10vw,2.5rem)}
+  .admin-hint,.demo-credentials{overflow-wrap:anywhere}
+  .toast{left:14px;right:14px;bottom:14px;text-align:center}
+}
