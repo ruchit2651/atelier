@@ -1,1 +1,0 @@
-import{r as e,s as b}from"./index-CmwyIIYF.js";function d(t,s={}){const[o,a]=e.useState([]),[i,r]=e.useState(!0),[n,l]=e.useState("");return e.useEffect(()=>{let u=!0;r(!0),l("");const c=b(t,s,f=>{u&&(a(f),r(!1))});return()=>{u=!1,c()}},[t,s.publishedOnly]),{items:o,loading:i,error:n}}export{d as u};
