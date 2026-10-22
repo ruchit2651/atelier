@@ -15,6 +15,7 @@ export default function Home() {
     { items: reviews } = useCollection("testimonials", { publishedOnly: true });
   const { settings } = useSiteSettings();
   const testimonialCards = reviews.slice(0, 5);
+  const shouldMarqueeTestimonials = testimonialCards.length === 5;
   const renderTestimonial = (review, index, copy) => {
     const rating = Math.max(0, Math.min(5, Number(review.rating) || 5));
     return (
@@ -180,13 +181,18 @@ export default function Home() {
             <span className="eyebrow">Kind words · From our clients</span>
           </div>
           <div className="testimonials-window">
-            <div className="testimonials-track" style={{ animationDuration: `${testimonialCards.length * 8}s` }}>
+            <div
+              className={`testimonials-track${shouldMarqueeTestimonials ? "" : " is-static"}`}
+              style={shouldMarqueeTestimonials ? { animationDuration: `${testimonialCards.length * 8}s` } : undefined}
+            >
               <div className="testimonials-set">
                 {testimonialCards.map((review, index) => renderTestimonial(review, index, "first"))}
               </div>
-              <div className="testimonials-set" aria-hidden="true">
-                {testimonialCards.map((review, index) => renderTestimonial(review, index, "loop"))}
-              </div>
+              {shouldMarqueeTestimonials && (
+                <div className="testimonials-set" aria-hidden="true">
+                  {testimonialCards.map((review, index) => renderTestimonial(review, index, "loop"))}
+                </div>
+              )}
             </div>
           </div>
         </section>

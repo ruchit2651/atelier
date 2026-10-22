@@ -1924,6 +1924,20 @@ html[data-theme="dark"] .testimonials-section {
   will-change: transform;
   animation: testimonials-marquee 40s linear infinite;
 }
+.testimonials-track.is-static {
+  display: block;
+  width: 100%;
+  animation: none;
+  will-change: auto;
+}
+.testimonials-track.is-static .testimonials-set {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 360px);
+  justify-content: center;
+  width: min(100%, 1160px);
+  margin-inline: auto;
+  padding-right: 0;
+}
 .testimonials-window:hover .testimonials-track {
   animation-play-state: paused;
 }
@@ -2013,6 +2027,11 @@ html[data-theme="dark"] .testimonials-section {
   .testimonials-set {
     gap: 14px;
     padding-right: 14px;
+  }
+  .testimonials-track.is-static .testimonials-set {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    gap: 14px;
   }
   .testimonial-card {
     flex-basis: min(310px, calc(100vw - 40px));
