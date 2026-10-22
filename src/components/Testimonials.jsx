@@ -1,50 +1,48 @@
 import { Star } from "lucide-react";
 
-const localPreviewReviews = import.meta.env.DEV
-  ? [
-      {
-        id: "preview-01",
-        quote: "They understood how we wanted our home to feel. Every room is calm, warm, and unmistakably ours.",
-        name: "Preview client 01",
-        role: "SAMPLE COPY · LOCAL PREVIEW",
-        rating: 5,
-      },
-      {
-        id: "preview-02",
-        quote: "The team brought clarity to every choice, from the floor plan to the final material details.",
-        name: "Preview client 02",
-        role: "SAMPLE COPY · LOCAL PREVIEW",
-        rating: 5,
-      },
-      {
-        id: "preview-03",
-        quote: "Our renovation feels brighter and more connected, while still keeping the character we loved.",
-        name: "Preview client 03",
-        role: "SAMPLE COPY · LOCAL PREVIEW",
-        rating: 5,
-      },
-      {
-        id: "preview-04",
-        quote: "Small details make daily life easier. The whole house feels thoughtful without feeling precious.",
-        name: "Preview client 04",
-        role: "SAMPLE COPY · LOCAL PREVIEW",
-        rating: 5,
-      },
-      {
-        id: "preview-05",
-        quote: "From our first meeting, the process felt personal. The finished spaces fit us beautifully.",
-        name: "Preview client 05",
-        role: "SAMPLE COPY · LOCAL PREVIEW",
-        rating: 5,
-      },
-    ]
-  : [];
+const previewReviews = [
+  {
+    id: "preview-01",
+    quote: "They understood how we wanted our home to feel. Every room is calm, warm, and unmistakably ours.",
+    name: "Preview client 01",
+    role: "SAMPLE COPY · DEMO",
+    rating: 5,
+  },
+  {
+    id: "preview-02",
+    quote: "The team brought clarity to every choice, from the floor plan to the final material details.",
+    name: "Preview client 02",
+    role: "SAMPLE COPY · DEMO",
+    rating: 5,
+  },
+  {
+    id: "preview-03",
+    quote: "Our renovation feels brighter and more connected, while still keeping the character we loved.",
+    name: "Preview client 03",
+    role: "SAMPLE COPY · DEMO",
+    rating: 5,
+  },
+  {
+    id: "preview-04",
+    quote: "Small details make daily life easier. The whole house feels thoughtful without feeling precious.",
+    name: "Preview client 04",
+    role: "SAMPLE COPY · DEMO",
+    rating: 5,
+  },
+  {
+    id: "preview-05",
+    quote: "From our first meeting, the process felt personal. The finished spaces fit us beautifully.",
+    name: "Preview client 05",
+    role: "SAMPLE COPY · DEMO",
+    rating: 5,
+  },
+];
 
 export default function Testimonials({ reviews = [] }) {
   const publishedReviews = reviews.slice(0, 5);
   const cards =
-    import.meta.env.DEV && publishedReviews.length < 5
-      ? [...publishedReviews, ...localPreviewReviews.slice(0, 5 - publishedReviews.length)]
+    publishedReviews.length < 5
+      ? [...publishedReviews, ...previewReviews.slice(0, 5 - publishedReviews.length)]
       : publishedReviews;
   const shouldMarquee = cards.length > 1;
 

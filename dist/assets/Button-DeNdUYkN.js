@@ -1,1 +1,0 @@
-import{j as n,L as x}from"./index-Bs0jAKpu.js";function c({to:o,href:u,children:s,variant:m="dark",...t}){const a=`button button-${m}`;return o?n.jsx(x,{className:a,to:o,...t,children:s}):u?n.jsx("a",{className:a,href:u,...t,children:s}):n.jsx("button",{className:a,...t,children:s})}export{c as B};
