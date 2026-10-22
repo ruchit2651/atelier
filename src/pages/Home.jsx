@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Star } from "lucide-react";
 import SEO from "../components/SEO.jsx";
 import Button from "../components/Button.jsx";
 import SectionTitle from "../components/SectionTitle.jsx";
@@ -15,11 +14,28 @@ export default function Home() {
     { items: posts } = useCollection("posts", { publishedOnly: true }),
     { items: reviews } = useCollection("testimonials", { publishedOnly: true });
   const { settings } = useSiteSettings();
-  const shouldReduceMotion = useReducedMotion();
-  const [reviewIndex, setReviewIndex] = useState(0);
-  const activeReviewIndex = reviews.length ? reviewIndex % reviews.length : 0;
-  const activeReview = reviews[activeReviewIndex];
-  const activeRating = Math.max(0, Math.min(5, Number(activeReview?.rating) || 5));
+  const testimonialCards = reviews.slice(0, 5);
+  const renderTestimonial = (review, index, copy) => {
+    const rating = Math.max(0, Math.min(5, Number(review.rating) || 5));
+    return (
+      <article
+        className="testimonial-card"
+        key={`${review.id || index}-${copy}`}
+        aria-label={`Review from ${review.name}`}
+      >
+        <div className="testimonial-rating" role="img" aria-label={`${rating} out of 5 stars`}>
+          {Array.from({ length: 5 }, (_, i) => (
+            <Star key={i} size={15} fill={i < rating ? "currentColor" : "none"} />
+          ))}
+        </div>
+        <blockquote>{review.quote}</blockquote>
+        <footer className="testimonial-attribution">
+          <strong>{review.name}</strong>
+          {review.role && <span>{review.role}</span>}
+        </footer>
+      </article>
+    );
+  };
   return (
     <>
       <SEO />
@@ -154,87 +170,24 @@ export default function Home() {
           ))}
         </div>
       </section>
-      {reviews.length > 0 && (
+      {testimonialCards.length > 0 && (
         <section
           className="testimonials-section"
           aria-label="Client testimonials"
           aria-roledescription="carousel"
         >
-          <div className="testimonials-inner">
-            <div className="testimonials-heading">
-              <span className="eyebrow">Kind words · From our clients</span>
-            </div>
-            <motion.div
-              className="testimonial-stage"
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.65, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <AnimatePresence mode="wait">
-                <motion.article
-                  className="testimonial-card"
-                  key={activeReview.id || activeReviewIndex}
-                  aria-roledescription="slide"
-                  aria-label={`${activeReviewIndex + 1} of ${reviews.length}: ${activeReview.name}`}
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}
-                  transition={{ duration: shouldReduceMotion ? 0 : 0.35, ease: "easeOut" }}
-                >
-                  <div
-                    className="testimonial-rating"
-                    role="img"
-                    aria-label={`${activeRating} out of 5 stars`}
-                  >
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <Star
-                        key={i}
-                        size={15}
-                        fill={i < activeRating ? "currentColor" : "none"}
-                      />
-                    ))}
-                  </div>
-                  <blockquote>{activeReview.quote}</blockquote>
-                  <footer className="testimonial-attribution">
-                    <strong>{activeReview.name}</strong>
-                    {activeReview.role && <span>{activeReview.role}</span>}
-                  </footer>
-                </motion.article>
-              </AnimatePresence>
-            </motion.div>
-            {reviews.length > 1 && (
-              <div className="testimonial-controls" role="group" aria-label="Choose a client review">
-                <button
-                  className="testimonial-arrow"
-                  type="button"
-                  aria-label="Previous review"
-                  onClick={() => setReviewIndex((index) => (index - 1 + reviews.length) % reviews.length)}
-                >
-                  <ArrowLeft size={17} />
-                </button>
-                <div className="testimonial-dots">
-                  {reviews.map((review, index) => (
-                    <button
-                      key={review.id || index}
-                      type="button"
-                      className={`testimonial-dot${index === activeReviewIndex ? " is-active" : ""}`}
-                      aria-label={`Show review ${index + 1}`}
-                      aria-pressed={index === activeReviewIndex}
-                      onClick={() => setReviewIndex(index)}
-                    />
-                  ))}
-                </div>
-                <button
-                  className="testimonial-arrow"
-                  type="button"
-                  aria-label="Next review"
-                  onClick={() => setReviewIndex((index) => (index + 1) % reviews.length)}
-                >
-                  <ArrowRight size={17} />
-                </button>
+          <div className="testimonials-heading">
+            <span className="eyebrow">Kind words · From our clients</span>
+          </div>
+          <div className="testimonials-window">
+            <div className="testimonials-track" style={{ animationDuration: `${testimonialCards.length * 8}s` }}>
+              <div className="testimonials-set">
+                {testimonialCards.map((review, index) => renderTestimonial(review, index, "first"))}
               </div>
-            )}
+              <div className="testimonials-set" aria-hidden="true">
+                {testimonialCards.map((review, index) => renderTestimonial(review, index, "loop"))}
+              </div>
+            </div>
           </div>
         </section>
       )}
