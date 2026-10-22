@@ -1,1 +1,0 @@
-import{j as s}from"./index-BFDOwwVm.js";function r({eyebrow:t,title:i,children:e}){return s.jsxs("div",{className:"section-title",children:[s.jsx("span",{className:"eyebrow",children:t}),s.jsx("h2",{children:i}),e&&s.jsx("p",{children:e})]})}export{r as S};
