@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Star } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import SEO from "../components/SEO.jsx";
 import Button from "../components/Button.jsx";
 import SectionTitle from "../components/SectionTitle.jsx";
 import ProjectCard from "../components/ProjectCard.jsx";
 import PostCard from "../components/PostCard.jsx";
+import Testimonials from "../components/Testimonials.jsx";
 import Loader from "../components/Loader.jsx";
 import useCollection from "../hooks/useCollection.js";
 import useSiteSettings from "../hooks/useSiteSettings.js";
@@ -14,29 +15,6 @@ export default function Home() {
     { items: posts } = useCollection("posts", { publishedOnly: true }),
     { items: reviews } = useCollection("testimonials", { publishedOnly: true });
   const { settings } = useSiteSettings();
-  const testimonialCards = reviews.slice(0, 5);
-  const shouldMarqueeTestimonials = testimonialCards.length === 5;
-  const renderTestimonial = (review, index, copy) => {
-    const rating = Math.max(0, Math.min(5, Number(review.rating) || 5));
-    return (
-      <article
-        className="testimonial-card"
-        key={`${review.id || index}-${copy}`}
-        aria-label={`Review from ${review.name}`}
-      >
-        <div className="testimonial-rating" role="img" aria-label={`${rating} out of 5 stars`}>
-          {Array.from({ length: 5 }, (_, i) => (
-            <Star key={i} size={15} fill={i < rating ? "currentColor" : "none"} />
-          ))}
-        </div>
-        <blockquote>{review.quote}</blockquote>
-        <footer className="testimonial-attribution">
-          <strong>{review.name}</strong>
-          {review.role && <span>{review.role}</span>}
-        </footer>
-      </article>
-    );
-  };
   return (
     <>
       <SEO />
@@ -171,32 +149,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-      {testimonialCards.length > 0 && (
-        <section
-          className="testimonials-section"
-          aria-label="Client testimonials"
-          aria-roledescription="carousel"
-        >
-          <div className="testimonials-heading">
-            <span className="eyebrow">Kind words · From our clients</span>
-          </div>
-          <div className="testimonials-window">
-            <div
-              className={`testimonials-track${shouldMarqueeTestimonials ? "" : " is-static"}`}
-              style={shouldMarqueeTestimonials ? { animationDuration: `${testimonialCards.length * 8}s` } : undefined}
-            >
-              <div className="testimonials-set">
-                {testimonialCards.map((review, index) => renderTestimonial(review, index, "first"))}
-              </div>
-              {shouldMarqueeTestimonials && (
-                <div className="testimonials-set" aria-hidden="true">
-                  {testimonialCards.map((review, index) => renderTestimonial(review, index, "loop"))}
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
+      <Testimonials reviews={reviews} />
       <section className="section container field-notes-section">
         <div className="section-heading">
           <SectionTitle eyebrow="Field notes" title="Ideas from the studio." />
